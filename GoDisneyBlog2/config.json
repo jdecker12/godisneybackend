@@ -1,0 +1,16 @@
+{
+  "ConnectionStrings": {
+    "GoDisneyConnectionString": "server=.\\MSSQLSERVER2017;Database=GoDisneyDb;Integrated Security=False;User ID=jdecker71;Password=Isabella1!;Connect Timeout=15;Encrypt=False;Packet Size=4096"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning"
+    }
+  },
+  "Tokens": {
+    "Key": "a; jjgjljacfd; jhghjagjd; gajdd",
+    "Issuer": "localhost",
+    "Audience": "users"
+  }
+}

@@ -3,3 +3,5 @@
 ################################################################################
 
 /GoDisneyBlog2/bin
+/.vs/GoDisneyBlog2/v15/Server/sqlite3
+/GoDisneyBlog2/obj
