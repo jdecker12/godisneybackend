@@ -14,5 +14,6 @@ namespace GoDisneyBlog2.Data
         void DeleteEntity(object model);
         Task<Card> GetCardByName(string name);
         Task<IEnumerable<Card>> GetCardsByCat(string cat);
+        Task<IEnumerable<Card>> GetCardsLinkData(string cat);
     }
 }

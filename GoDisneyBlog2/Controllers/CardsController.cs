@@ -12,6 +12,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using System.IO;
+using System.Collections;
 
 namespace GoDisneyBlog2.Controllers
 {
@@ -129,7 +131,70 @@ namespace GoDisneyBlog2.Controllers
             }
         }
 
+        [HttpGet("{category}")]
+        [Route("GetCardsLinkData/{category}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCardsLinkData(string category)
+        {
+            try
+            {
+                var cards = await _repository.GetCardsLinkData(category);
+                if (cards != null)
+                {
+                    return Ok(_mapper.Map<IEnumerable<Card>, IEnumerable<CardViewModel>>(cards));
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to get card data by category");
+                return BadRequest($"Failed to get card data by category {ex}");
+            }
+        }
 
+        [HttpGet]
+        [Route("GetAllImages")]
+        public IActionResult GetAllImages()
+        {
+            try
+            {
+                string fileName = "";
+                if (Directory.Exists("wwwroot/assets/img"))
+                {
+                    var strFiles = Directory.GetFiles("wwwroot/assets/img");
+                    string _CurrentFile = "";
+                    string tempFileUrl = "";
+                    List<string> images = new List<string>();
+                    if (strFiles.Length > 0)
+                    {
+                        for (int i = 0; i < strFiles.Length; i++)
+                        {
+                            fileName = Path.GetFileName(strFiles[i]);
+                            _CurrentFile = strFiles[i].ToString();
+                            if (System.IO.File.Exists(_CurrentFile))
+                            {
+                                tempFileUrl = _CurrentFile.Replace("wwwroot/assets/img\\", "");
+                                images.Add(tempFileUrl);
+                            }
+                        }
+                        return Ok(images);
+                    }
+                    return BadRequest();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to get card data by category");
+                return BadRequest($"Failed to get card data by category {ex}");
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CardViewModel model)
@@ -137,21 +202,21 @@ namespace GoDisneyBlog2.Controllers
 
             var newCard = _mapper.Map<CardViewModel, Card>(model);
 
-           
+
             try
             {
 
-                    _repository.AddEntity(newCard);
-                    if (await _repository.SaveAllAsync())
-                    {
+                _repository.AddEntity(newCard);
+                if (await _repository.SaveAllAsync())
+                {
 
-                        return Created($"/api/cards/{newCard.Id}", _mapper.Map<Card, CardViewModel>(newCard));
-                    }
+                    return Created($"/api/cards/{newCard.Id}", _mapper.Map<Card, CardViewModel>(newCard));
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Failed to save card info. {ex}");
-               
+
             }
             return BadRequest(ModelState);
 

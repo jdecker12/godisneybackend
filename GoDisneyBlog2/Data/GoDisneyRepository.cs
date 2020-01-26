@@ -95,6 +95,24 @@ namespace GoDisneyBlog2.Data
             }
         }
 
+        public async Task<IEnumerable<Card>> GetCardsLinkData(string cat)
+        {
+            try
+            {
+                return await _context.Cards
+                        .Include(c => c.CardContents)
+                        .Where(n => n.Category == cat)
+                        .OrderByDescending(c => c.Id)
+                        .Take(3)
+                        .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get card by name {ex}");
+                return null;
+            }
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             try
