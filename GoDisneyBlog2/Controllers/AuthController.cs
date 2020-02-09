@@ -51,6 +51,18 @@ namespace GoDisneyBlog2.Controllers
         [Route("CreateToken")]
         public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
         {
+            string uName = model.Username;
+            string uPass = model.Password;
+
+            byte[] decName = Convert.FromBase64String(uName);
+            byte[] decPass = Convert.FromBase64String(uPass);
+
+            string decodeUser = Encoding.UTF8.GetString(decName);
+            string decodedPassword = Encoding.UTF8.GetString(decPass);
+
+            model.Username = decodeUser;
+            model.Password = decodedPassword;
+
             if (ModelState.IsValid)
             {
 

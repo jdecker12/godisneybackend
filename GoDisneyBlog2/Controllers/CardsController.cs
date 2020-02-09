@@ -19,7 +19,7 @@ namespace GoDisneyBlog2.Controllers
 {
     [Route("api/[Controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class CardsController: Controller
+    public class CardsController: ControllerBase
     {
         private IGoDisneyRepository _repository;
         private ILogger<CardsController> _logger;
@@ -189,7 +189,7 @@ namespace GoDisneyBlog2.Controllers
                     return NotFound();
                 }
             }
-            catch (Exception ex)
+            catch (DirectoryNotFoundException ex)
             {
                 _logger.LogError("Failed to get card data by category");
                 return BadRequest($"Failed to get card data by category {ex}");
@@ -201,8 +201,6 @@ namespace GoDisneyBlog2.Controllers
         {
 
             var newCard = _mapper.Map<CardViewModel, Card>(model);
-
-
             try
             {
 

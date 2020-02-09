@@ -30,8 +30,6 @@ namespace GoDisneyBlog2
             _config = config;
         }
 
-       
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -69,24 +67,26 @@ namespace GoDisneyBlog2
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // if (env.IsDevelopment())
-            // {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseDefaultFiles();
                 app.UseStaticFiles();
                 app.UseAuthentication();
-            // }
-            // else
-            // {
-            //     app.UseHsts();
-            // }
-            app.UseCors(builder => builder
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowAnyOrigin()
-            .AllowCredentials());
-    //app.UseHttpsRedirection();
-            app.UseMvc(cfg =>
+        }
+             else
+             {
+                app.UseDefaultFiles();
+                app.UseStaticFiles();
+                app.UseAuthentication();
+            }
+                app.UseCors(builder => builder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin()
+                        .AllowCredentials());
+                app.UseHttpsRedirection();
+                app.UseMvc(cfg =>
             {
                 cfg.MapSpaFallbackRoute(
                     name: "spa-fallback",
