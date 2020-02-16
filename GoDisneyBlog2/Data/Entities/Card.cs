@@ -12,6 +12,7 @@ namespace GoDisneyBlog2.Data.Entities
         public string Category { get; set; }
         public string CardTitle { get; set; }
         public string CardImg { get; set; }
+        public string CardImg3 { get; set; }
         public string CardLink { get; set; }
         public string CardLinkName { get; set; }
         public string CardIcon { get; set; }

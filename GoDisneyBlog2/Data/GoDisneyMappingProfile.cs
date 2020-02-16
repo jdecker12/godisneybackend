@@ -18,6 +18,7 @@ namespace GoDisneyBlog2.Data
                 .ForMember(c => c.cardTitle, ex => ex.MapFrom(c => c.CardTitle))
                 .ForMember(c => c.cardCategory, ex => ex.MapFrom(c => c.Category))
                 .ForMember(c => c.cardImg, ex => ex.MapFrom(c => c.CardImg))
+                .ForMember(c => c.cardImg3, ex => ex.MapFrom(c => c.CardImg3))
                 .ForMember(c => c.cardContents, ex => ex.MapFrom(c => c.CardContents))
                 .ForMember(c => c.cardIcon, ex => ex.MapFrom(c => c.CardIcon))
                 .ForMember(c => c.cardLink, ex => ex.MapFrom(c => c.CardLink))
